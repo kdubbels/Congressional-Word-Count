@@ -1,0 +1,131 @@
+<html>
+    <head>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+          </head>
+    <body>
+
+
+    	<form action="" id="phrase-lookup">
+    		<div>
+    			<label for="txt-phrase">Your phrase:</label>
+    			<input type="text" id="txt-phrase" name="zip" required />
+    		</div>
+
+   			<div>
+   				<input type="submit" id="btn-lookup" value="Look up a phrase" />
+   			</div>
+   		</form>
+
+<div id="phrase-lookup-results">
+</div>
+
+
+<script>
+$(document).ready(function () {
+	$('#phrase-lookup').submit(function(e){
+		e.preventDefault();
+
+		var $results = $('#phrase-lookup-results'),
+			phrase = $('#txt-phrase').val(),
+			start_date = '2008-09-16',
+            end_date = '2011-09-17',
+			apiKey = 'a059153222414415a40f0b667f0b57ed';
+
+		var requestURL = 'http://capitolwords.org/api/phrases/party.json?callback=?';
+
+		$.getJSON(requestURL, {
+			'apikey' : apiKey,
+			'phrase' : phrase,
+			'start_date' : start_date,
+			'end_date' : end_date,
+			}, function(data){
+				console.log(data);
+				var dataset = (data);
+				
+				if (data.results && data.results.length > 0) {
+
+				var mySenators = '<p>Here is your phrase by party, from the 2008 financial crisis until Occupy Wall St:</p>';
+
+				$.each(data.results, function(i, rep) {
+					
+
+						mySenators += '<p>';
+						mySenators += rep.count + ' ' + rep.party;
+						mySenators += '</p>';
+
+				});
+
+				$results.html(mySenators);
+			} else { 
+				$results.html('<p>The phrase ' + phrase + ' was not found</p>');
+			}
+		
+});
+});
+});
+</script>
+
+
+
+<script type="text/javascript">
+
+			//Width and height
+			var w = 300;
+			var h = 300;
+
+			var dataset = [ 5, 10, 20, 45, 6, 25 ];
+			var outerRadius = w / 2;
+			var innerRadius = 0;
+			var arc = d3.svg.arc()
+							.innerRadius(innerRadius)
+							.outerRadius(outerRadius);
+			
+			var pie = d3.layout.pie();
+			
+			//Easy colors accessible via a 10-step ordinal scale
+			var color = d3.scale.category10();
+
+			//Create SVG element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+			
+			//Set up groups
+			var arcs = svg.selectAll("g.arc")
+						  .data(pie(dataset))
+						  .enter()
+						  .append("g")
+						  .attr("class", "arc")
+						  .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
+			
+			//Draw arc paths
+			arcs.append("path")
+			    .attr("fill", function(d, i) {
+			    	return color(i);
+			    })
+			    .attr("d", arc);
+			
+			//Labels
+			arcs.append("text")
+			    .attr("transform", function(d) {
+			    	return "translate(" + arc.centroid(d) + ")";
+			    })
+			    .attr("text-anchor", "middle")
+			    .text(function(d) {
+			    	return d.value;
+			    });
+						
+		</script>
+        </body>
+</html>
