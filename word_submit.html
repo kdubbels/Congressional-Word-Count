@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript">
+
+</script>
+          </head>
+    <body>
+
+
+    	<form action="" id="phrase-lookup">
+    		<div>
+    			<label for="txt-phrase">Your phrase:</label>
+    			<input type="text" id="txt-phrase" name="zip" required />
+    		</div>
+
+   			<div>
+   				<input type="submit" id="btn-lookup" value="Look up a phrase" />
+   			</div>
+   		</form>
+
+<div id="phrase-lookup-results">
+</div>
+
+
+<script>
+$(document).ready(function () {
+	$('#phrase-lookup').submit(function(e){
+		e.preventDefault();
+
+		var $results = $('#phrase-lookup-results'),
+			phrase = $('#txt-phrase').val(),
+			apiKey = 'a059153222414415a40f0b667f0b57ed';
+
+		var requestURL = 'http://capitolwords.org/api/phrases/party.json?callback=?';
+
+		$.getJSON(requestURL, {
+			'apikey' : apiKey,
+			'phrase' : phrase,
+			}, function(data){
+				console.log(data);
+				/*
+				if (data.results && data.results.length > 0) {
+
+				var mySenators = '<p>Here are your Senators</p>';
+
+				$.each(data.results, function(i, rep) {
+					if ('senate' === rep.chamber.toLowerCase()) {
+						mySenators += '<p>';
+						mySenators += '<a href="' + rep.contact_form + '" target="_blank">';
+						mySenators += rep.first_name + ' ' + rep.last_name;
+						mySenators += '</a>';
+						mySenators += '</p>';
+					}
+				});
+
+				mySenators += '<p>Please write to them in support</p>';
+
+				$results.html(mySenators);
+			} else { 
+				$results.html('<p>None found for ' + zipCode + ' fdafdsa</p>');
+			}
+			*/
+});
+});
+});
+</script>
+        </body>
+</html>

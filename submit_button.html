@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript">
+
+</script>
+          </head>
+    <body>
+
+
+    	<form action="" id="rep-lookup">
+    		<div>
+    			<label for="txt-zip">Your phrase:</label>
+    			<input type="text" id="txt-zip" name="zip" required />
+    		</div>
+
+   			<div>
+   				<input type="submit" id="btn-lookup" value="Look up my reps" />
+   			</div>
+   		</form>
+
+<div id="rep-lookup-results">
+</div>
+
+
+<script>
+$(document).ready(function () {
+	$('#rep-lookup').submit(function(e){
+		e.preventDefault();
+
+		var $results = $('#rep-lookup-results'),
+			zipcode = $('#txt-zip').val(),
+			apiKey = 'a059153222414415a40f0b667f0b57ed';
+
+		var requestURL = 'https://congress.api.sunlightfoundation.com/legislators/locate?callback=?';
+
+		$.getJSON(requestURL, {
+			'apikey' : apiKey,
+			'zip' : zipcode,
+			}, function(data){
+				console.log(data);
+				if (data.results && data.results.length > 0) {
+
+				var mySenators = '<p>Here are your Senators</p>';
+
+				$.each(data.results, function(i, rep) {
+					if ('senate' === rep.chamber.toLowerCase()) {
+						mySenators += '<p>';
+						mySenators += '<a href="' + rep.contact_form + '" target="_blank">';
+						mySenators += rep.first_name + ' ' + rep.last_name;
+						mySenators += '</a>';
+						mySenators += '</p>';
+					}
+				});
+
+				mySenators += '<p>Please write to them in support</p>';
+
+				$results.html(mySenators);
+			} else { 
+				$results.html('<p>None found for ' + zipCode + ' fdafdsa</p>');
+			}
+});
+});
+});
+</script>
+        </body>
+</html>
