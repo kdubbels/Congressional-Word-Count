@@ -30,6 +30,8 @@ $(document).ready(function () {
 
 		var $results = $('#phrase-lookup-results'),
 			phrase = $('#txt-phrase').val(),
+			start_date = '2008-09-16',
+            end_date = '2011-09-17',
 			apiKey = 'a059153222414415a40f0b667f0b57ed';
 
 		var requestURL = 'http://capitolwords.org/api/phrases/party.json?callback=?';
@@ -37,30 +39,29 @@ $(document).ready(function () {
 		$.getJSON(requestURL, {
 			'apikey' : apiKey,
 			'phrase' : phrase,
+			'start_date' : start_date,
+			'end_date' : end_date,
 			}, function(data){
 				console.log(data);
-				/*
+				
+				
 				if (data.results && data.results.length > 0) {
 
-				var mySenators = '<p>Here are your Senators</p>';
+				var mySenators = '<p>Here is your phrase by party, from the 2008 financial crisis until Occupy Wall St:</p>';
 
 				$.each(data.results, function(i, rep) {
-					if ('senate' === rep.chamber.toLowerCase()) {
+					
 						mySenators += '<p>';
-						mySenators += '<a href="' + rep.contact_form + '" target="_blank">';
-						mySenators += rep.first_name + ' ' + rep.last_name;
-						mySenators += '</a>';
+						mySenators += rep.count + ' ' + rep.party;
 						mySenators += '</p>';
-					}
+					
 				});
-
-				mySenators += '<p>Please write to them in support</p>';
 
 				$results.html(mySenators);
 			} else { 
-				$results.html('<p>None found for ' + zipCode + ' fdafdsa</p>');
+				$results.html('<p>The phrase ' + phrase + ' was not found</p>');
 			}
-			*/
+		
 });
 });
 });
