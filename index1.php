@@ -3,6 +3,7 @@
 <html>
     <head>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
         <script type="text/javascript">
         function showResponse (response) {
             RESPONSE = response;
@@ -24,12 +25,16 @@
         <!-- <div>URL:<a id="url"></a></div>
         <hr> -->
 
-<form id="myForm">
-    <div class="form-group">
-<label for="phrase">Phrase: </label><input id="phrase" class="form-control" name="phrase" type="text" placeholder="phrase" autofocus required />
-    <input id="sub" type="submit" value="Submit Data" onclick="ajax_post();"> 
-    </div>
-</form>
+<form action="" id="phrase-lookup">
+            <div>
+                <label for="txt-phrase">Your phrase:</label>
+                <input type="text" id="txt-phrase" name="zip" required />
+            </div>
+
+            <div>
+                <input type="submit" id="btn-lookup" value="Look up a phrase" />
+            </div>
+        </form>
 
     <hr />
         <div>

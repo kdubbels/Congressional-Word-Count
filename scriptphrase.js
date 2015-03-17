@@ -1,9 +1,14 @@
-var query_params = { apikey: 'f6ab5f2e4f69444b9f2c0a44d9a5223d',
-                   phrase:"class warfare",
-                   sort:"count desc"
+$(document).ready(function () {
+	$('#phrase-lookup').submit(function(e){
+		e.preventDefault();
+
+var query_params = { apikey: 'a059153222414415a40f0b667f0b57ed',
+                   phrase: $('#txt-phrase').val(),
+			start_date: '2008-09-16',
+            end_date: '2011-09-17'
 };
 
-var endpoint = "http://capitolwords.org/api/phrases/party.json";
+var endpoint = "http://capitolwords.org/api/phrases/party.json?callback=?";
 
 var options = {
   data: query_params,
@@ -12,11 +17,7 @@ var options = {
 };
 
 var request = jQuery.ajax(endpoint, options).done(showResponse);
-var request = jQuery.ajax(endpoint, options).done(assign);
 
-function assign(response) {
-        greedy_state = response.results[0].state;
 
-}
-
-var endpoint = "phrases/state.json";
+});
+});
