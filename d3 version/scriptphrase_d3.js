@@ -16,10 +16,17 @@ var options = {
   dataType: 'jsonp'      
 };
 
-var request = jQuery.ajax(endpoint, options).done(showResponse);
+var request = jQuery.ajax(endpoint, options).done(showResponse, showResponse1, showResponse2);
 
-function showResponse (response) {
+function showResponse1 (response) {
 	console.log(response);
+
 };
+
+// experiment with localStorage - not essential functionality
+function showResponse2 (response) {
+localStorage.setItem('response', JSON.stringify(response));
+};
+
 });
 });

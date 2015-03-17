@@ -16,18 +16,27 @@
         }
 */
         </script>
+<script>
+function showResponse (response) {
+            RESPONSE = response;
+            if (this && this.url && (typeof(this.url) == "string")) {
+                var anchor = jQuery("#url");
+                anchor.text(this.url.toString());
+                anchor.attr('href', this.url.toString());
+            }
+            jQuery("#output").text(JSON.stringify(response, null, '  '));
+        }
+
+</script>
 
 
-
-        <script src="scriptphrase.js" type="text/javascript"></script>
+        <script src="scriptphrase_d3.js" type="text/javascript"></script>
 
 
 
 
     </head>
     <body>
-        <!-- <div>URL:<a id="url"></a></div>
-        <hr> -->
 
 <form action="" id="phrase-lookup">
             <div>
