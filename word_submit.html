@@ -36,9 +36,9 @@ $(document).ready(function () {
 		e.preventDefault();
 
 		var $results = $('#phrase-lookup-results'),
-			phrase = $('#txt-phrase').val(),
-			start_date = '2008-09-16',
-            end_date = '2011-09-17',
+            phrase: $('#txt-phrase').val(),
+			start_date: $('#txt-startdate').val(),
+            end_date: $('#txt-enddate').val()
 			apiKey = 'a059153222414415a40f0b667f0b57ed';
 
 		var requestURL = 'http://capitolwords.org/api/phrases/party.json?callback=?';

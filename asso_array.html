@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <html>
-    <head>
-
+<head>
+<title>Associative Array</title>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <!-- Latest compiled and minified CSS -->
@@ -11,71 +12,33 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-          </head>
-    <body>
-
-
-    	<form action="" id="phrase-lookup">
-    		<div>
-    			<label for="txt-phrase">Your phrase:</label>
-    			<input type="text" id="txt-phrase" name="zip" required />
-    		</div>
-
-   			<div>
-   				<input type="submit" id="btn-lookup" value="Look up a phrase" />
-   			</div>
-   		</form>
-
-<div id="phrase-lookup-results">
-</div>
-
-
+</head>
+<body>
+<form id="picker">
+ <label>Value 1:</label> <input type="text" id="first" /><br />
+ <label>Value 2:</label> <input type="text" id="second" /><br />
+ <label>Value 3:</label> <input type="text" id="third" /><br />
+ <label>Value 4:</label> <input type="text" id="four" /><br />
+ <button id="validate">Validate</button>
+</form>
+<div id="result"></div>
 <script>
-$(document).ready(function () {
-	$('#phrase-lookup').submit(function(e){
-		e.preventDefault();
-
-		var $results = $('#phrase-lookup-results'),
-			phrase = $('#txt-phrase').val(),
-			start_date = '2008-09-16',
-            end_date = '2011-09-17',
-			apiKey = 'a059153222414415a40f0b667f0b57ed';
-
-		var requestURL = 'http://capitolwords.org/api/phrases/party.json?callback=?';
-
-		$.getJSON(requestURL, {
-			'apikey' : apiKey,
-			'phrase' : phrase,
-			'start_date' : start_date,
-			'end_date' : end_date,
-			}, function(data){
-				console.log(data);
-				var dataset = (data);
-				
-				if (data.results && data.results.length > 0) {
-
-				var mySenators = '';
-
-				$.each(data.results, function(i, rep) {
-					
-
-						mySenators += '<span class="count">';
-						mySenators += rep.count;
-						mySenators += '</span>';
-						mySenators += '<span class="party">';
-						mySenators += rep.party;
-						mySenators += '</span>';
-
-				});
-
-				$results.html(mySenators);
-			} else { 
-				$results.html('<p>The phrase ' + phrase + ' was not found</p>');
-			}
-		
-});
-});
-});
+ // get the form element names and values and validate
+ document.getElementById('validate').addEventListener('click',function (evnt) {
+ evnt.preventDefault();
+ // create array of element key/values
+ var elems = document.getElementById("picker").elements;
+ var elemArray = new Object();
+ for (var i = 0; i < elems.length; i++) {
+ if (elems[i].type == "text") elemArray[elems[i].id] = elems[i].value;
+ }
+ var str = '';
+ Object.keys(elemArray).forEach(function (key) {
+ var value = elemArray[key];
+ str+=key + '->' + value + '<br />';
+ });
+ document.getElementById("result").innerHTML = str;
+ }, false);
 </script>
 
 
@@ -88,7 +51,7 @@ $(document).ready(function () {
 			var w = 300;
 			var h = 300;
 
-			var stuff = document.getElementById("phrase-lookup-results");
+			var stuff = elemArray;
 			var dataset = stuff;
 
 			var outerRadius = w / 2;
