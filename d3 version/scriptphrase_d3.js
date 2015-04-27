@@ -74,8 +74,8 @@ function generateChart(data) {
           height = 500,
           radius = Math.min(width, height) / 2;
 
-      var color = d3.scale.ordinal()
-          .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+      var color = d3.scale.category10();
+          // .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
       var arc = d3.svg.arc()
           .outerRadius(radius - 10)
@@ -98,13 +98,13 @@ function generateChart(data) {
 
       g.append("path")
           .attr("d", arc)
-          .style("fill", function(d) { return color(d); });
+          .style("fill", function(d) { return color(d.value); });
 
-      g.append("text")
-          .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-          .attr("dy", ".35em")
-          .style("text-anchor", "middle")
-          .text(function(d) { return d; });
+      // g.append("text")
+      //     .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+      //     .attr("dy", ".35em")
+      //     .style("text-anchor", "middle")
+      //     .text(function(d) { return d; });
 
 // END D3
 
