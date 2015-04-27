@@ -62,7 +62,53 @@ function smashData(data) {
   }
   console.log(partyResult);
   console.log(countResult);
+  return countResult;
 };
+
+// BEGIN D3
+
+function generateChart(data) {
+
+
+      var width = 960,
+          height = 500,
+          radius = Math.min(width, height) / 2;
+
+      var color = d3.scale.ordinal()
+          .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+      var arc = d3.svg.arc()
+          .outerRadius(radius - 10)
+          .innerRadius(radius - 70);
+
+      var pie = d3.layout.pie()
+          .sort(null)
+          .value(function(d) { return d; });
+
+      var svg = d3.select("body").append("svg")
+          .attr("width", width)
+          .attr("height", height)
+        .append("g")
+          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+      var g = svg.selectAll(".arc")
+          .data(pie(data))
+        .enter().append("g")
+          .attr("class", "arc");
+
+      g.append("path")
+          .attr("d", arc)
+          .style("fill", function(d) { return color(d); });
+
+      g.append("text")
+          .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+          .attr("dy", ".35em")
+          .style("text-anchor", "middle")
+          .text(function(d) { return d; });
+
+// END D3
+
+}
 
 $('#phrase-lookup').submit(function(e){
 		e.preventDefault();
@@ -81,7 +127,7 @@ var options = {
   dataType: 'jsonp'      
 };
 
-var request = jQuery.ajax(endpoint, options).done(showResponse, showResponse1, showResponse2, showResponse3, showResponse4, showResponse5);
+var request = jQuery.ajax(endpoint, options).done(showResponse, showResponse1, showResponse2, showResponse3, showResponse4, showResponse5, showResponse6);
 
 function showResponse1 (response) {
 	console.log(response);
@@ -106,8 +152,12 @@ function showResponse4(response) {
 };
 
 function showResponse5(response) {
-	var smash = smashData(crunchData(processData(response)));
-	console.log(smash);
+	var dataset = smashData(crunchData(processData(response)));
+	return dataset;
+};
+
+function showResponse6(response) {
+  var pieGenerated = generateChart(smashData(crunchData(processData(response))));
 };
 
 });
