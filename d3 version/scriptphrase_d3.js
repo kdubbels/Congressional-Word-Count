@@ -95,10 +95,10 @@ function generateChart(data) {
           .data(pie(data))
         .enter().append("g")
           .attr("class", "arc");
-
+console.log(pie(data));
       g.append("path")
           .attr("d", arc)
-          .style("fill", function(d) { return color(d.value); });
+          .style("fill", function(d) {console.log(d); return color(d.value); });
 
       // g.append("text")
       //     .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
