@@ -1,31 +1,5 @@
 $(document).ready(function () {
 
-// function processData(data) {
-//   var myData = [];
-
-//   var myDates = [];
-//   var results = [];
-//   // var medTemps = ['Median Temperature'];
-//   // var meanPress = ['Mean Pressure'];
-//   // var medPress = ['Median Pressure'];
-//   // var meanSpeeds = ['Mean Speed'];
-//   // var medSpeeds = ['Median Speed'];
-
-//   for (var key in data) {
-//     if (data.hasOwnProperty(key)) {
-//         results.push(data[0]);
-//         results.push(data[1]);
-//         // meanPress.push(getMean(data[key].p));
-//         // medPress.push(getMedian(data[key].p));
-//         // meanSpeeds.push(getMean(data[key].s));
-//         // medSpeeds.push(getMedian(data[key].s));
-//     } // hasOwnProperty
-//   } // for key in data
-
-//   myData.push(results);
-//   return myData;
-// } // Process Data
-
 function processData(data) {
 	var myData = [];
 
@@ -85,7 +59,7 @@ function generateChart(data) {
           .sort(null)
           .value(function(d) { return d; });
 
-      var svg = d3.select("body").append("svg")
+      var svg = d3.selectAll("body").append("svg")
           .attr("width", width)
           .attr("height", height)
         .append("g")
@@ -99,16 +73,11 @@ console.log(pie(data));
       g.append("path")
           .attr("d", arc)
           .style("fill", function(d) {console.log(d); return color(d.value); });
+}
 
-      // g.append("text")
-      //     .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-      //     .attr("dy", ".35em")
-      //     .style("text-anchor", "middle")
-      //     .text(function(d) { return d; });
 
 // END D3
 
-}
 
 $('#phrase-lookup').submit(function(e){
 		e.preventDefault();
@@ -127,7 +96,7 @@ var options = {
   dataType: 'jsonp'      
 };
 
-var request = $.ajax(endpoint, options).done(showResponse, showResponse1, showResponse2, showResponse3, showResponse4, showResponse5, showResponse6);
+var request = $.ajax(endpoint, options).done(showResponse, showResponse1, showResponse3, showResponse4, showResponse5, showResponse6);
 
 function showResponse1 (response) {
 	console.log(response);
@@ -135,9 +104,9 @@ function showResponse1 (response) {
 };
 
 // experiment with localStorage - not essential functionality
-function showResponse2 (response) {
-localStorage.setItem('response', JSON.stringify(response));
-};
+// function showResponse2 (response) {
+// localStorage.setItem('response', JSON.stringify(response));
+// };
 
 function showResponse3(response) {
       var processed = processData(response);
