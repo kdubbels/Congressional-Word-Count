@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Associative Array</title>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<form id="picker">
+ <label>Value 1:</label> <input type="text" id="first" /><br />
+ <label>Value 2:</label> <input type="text" id="second" /><br />
+ <label>Value 3:</label> <input type="text" id="third" /><br />
+ <label>Value 4:</label> <input type="text" id="four" /><br />
+ <button id="validate">Validate</button>
+</form>
+<div id="result"></div>
+<script>
+ // get the form element names and values and validate
+ document.getElementById('validate').addEventListener('click',function (evnt) {
+ evnt.preventDefault();
+ // create array of element key/values
+ var elems = document.getElementById("picker").elements;
+ var elemArray = new Object();
+ for (var i = 0; i < elems.length; i++) {
+ if (elems[i].type == "text") elemArray[elems[i].id] = elems[i].value;
+ }
+ var str = '';
+ Object.keys(elemArray).forEach(function (key) {
+ var value = elemArray[key];
+ str+=key + '->' + value + '<br />';
+ });
+ document.getElementById("result").innerHTML = str;
+ }, false);
+</script>
+
+
+
+<script type="text/javascript">
+
+
+
+			//Width and height
+			var w = 300;
+			var h = 300;
+
+			var stuff = elemArray;
+			var dataset = stuff;
+
+			var outerRadius = w / 2;
+			var innerRadius = 0;
+			var arc = d3.svg.arc()
+							.innerRadius(innerRadius)
+							.outerRadius(outerRadius);
+			
+			var pie = d3.layout.pie();
+			
+			//Easy colors accessible via a 10-step ordinal scale
+			var color = d3.scale.category10();
+
+			//Create SVG element
+			var svg = d3.select("body")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+			
+			//Set up groups
+			var arcs = svg.selectAll("g.arc")
+						  .data(pie(dataset))
+						  .enter()
+						  .append("g")
+						  .attr("class", "arc")
+						  .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
+			
+			//Draw arc paths
+			arcs.append("path")
+			    .attr("fill", function(d, i) {
+			    	return color(i);
+			    })
+			    .attr("d", arc);
+			
+			//Labels
+			arcs.append("text")
+			    .attr("transform", function(d) {
+			    	return "translate(" + arc.centroid(d) + ")";
+			    })
+			    .attr("text-anchor", "middle")
+			    .text(function(d) {
+			    	return d.value;
+			    });
+						
+		</script>
+        </body>
+</html>

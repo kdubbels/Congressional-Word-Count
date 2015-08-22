@@ -1,0 +1,23 @@
+$(document).ready(function () {
+	$('#rep-lookup').submit(function(e){
+		e.preventDefault();
+
+		var $results = $('#rep-lookup-results'),
+			zipcode = $('#txt-zip').val(),
+			apiKey = 'a059153222414415a40f0b667f0b57ed';
+
+		var requestURL = 'https://congress.api.sunlightfoundation.com/legislators/locate?callback=?';
+
+		$.getJSON(requestURL, {
+			'apikey' : apiKey,
+			'zip' : zipcode,
+			}, function(data){
+			console.log(data);
+			});
+
+		$results.html('Your senators for ' + zipcode + ' are');
+
+
+	});
+
+});
