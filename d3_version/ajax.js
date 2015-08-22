@@ -45,25 +45,25 @@ function crunchData(data) {
   }
 };
 
-function countResult(data) {
-	var countResult = [];
-	for (var i = 0; i < data.length; i++) {
-  	var count = data[i].count;
-  	countResult.push(count);
-  }
-  console.log(countResult);
-  return countResult;
-};
+// function countResult(data) {
+// 	var countResult = [];
+// 	for (var i = 0; i < data.length; i++) {
+//   	var count = data[i].count;
+//   	countResult.push(count);
+//   }
+//   console.log(countResult);
+//   return countResult;
+// };
 
-function partyResult(data) {
-  var partyResult = [];
-  for (var i = 0; i < data.length; i++) {
-    var count = data[i].count;
-    partyResult.push(count);
-  }
-  console.log (partyResult);
-  return partyResult;
-}
+// function partyResult(data) {
+//   var partyResult = [];
+//   for (var i = 0; i < data.length; i++) {
+//     var count = data[i].count;
+//     partyResult.push(count);
+//   }
+//   console.log (partyResult);
+//   return partyResult;
+// }
 
 
 function generateChart(data) {
@@ -73,8 +73,8 @@ function generateChart(data) {
           height = 500,
           radius = Math.min(width, height) / 2;
 
-      var color = d3.scale.category10();
-          // .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+      var color = d3.scale.category10()
+           .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
       var arc = d3.svg.arc()
           .outerRadius(radius - 10)
@@ -82,7 +82,7 @@ function generateChart(data) {
 
       var pie = d3.layout.pie()
           .sort(null)
-          .value(function(d) { return d; });
+          .value(function(d) { return d.count; });
 
       var svg = d3.selectAll("body").append("svg")
           .attr("width", width)
@@ -97,7 +97,17 @@ function generateChart(data) {
       
       g.append("path")
           .attr("d", arc)
-          .style("fill", function(d) {console.log(d); return color(d.value); });
+          .style("fill", function(d) {console.log(d); return color(d.data.party); });
+
+      g.append("text")
+        .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .append("tspan")
+        .text(function(d) { return d.data.party;})
+        .append("tspan")
+        // .attr("dy", "10px")
+        .text(function(d) { return d.data.count; });
 }
 
 
@@ -123,7 +133,7 @@ function generateChart(data) {
 // };
 
 function showResponse2(response) {
-  var pieGenerated = generateChart(countResult(crunchData(processData(response))));
+  var pieGenerated = generateChart(crunchData(processData(response)));
 };
 
 });
