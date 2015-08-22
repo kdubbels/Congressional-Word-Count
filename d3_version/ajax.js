@@ -45,29 +45,23 @@ function crunchData(data) {
   }
 };
 
-// function countResult(data) {
-// 	var countResult = [];
-// 	for (var i = 0; i < data.length; i++) {
-//   	var count = data[i].count;
-//   	countResult.push(count);
-//   }
-//   console.log(countResult);
-//   return countResult;
-// };
+function convertParty(data){
+  
+  if (data.party == "R" || data.party == "Republican") {
+    data.party = "Republican";
+  } else if (data.party == "D" || data.party == "Democrat") {
+    data.party = "Democrat";
+  } else {
+    data.party = "Independent";
+  }
 
-// function partyResult(data) {
-//   var partyResult = [];
-//   for (var i = 0; i < data.length; i++) {
-//     var count = data[i].count;
-//     partyResult.push(count);
-//   }
-//   console.log (partyResult);
-//   return partyResult;
-// }
+};
+
 
 
 function generateChart(data) {
-  console.log(data);
+
+  data.forEach(convertParty);
 
       var width = 960,
           height = 500,
@@ -84,7 +78,7 @@ function generateChart(data) {
           .sort(null)
           .value(function(d) { return d.count; });
 
-      var svg = d3.selectAll("body").append("svg")
+      var svg = d3.select("#chart").append("svg")
           .attr("width", width)
           .attr("height", height)
         .append("g")
@@ -109,28 +103,6 @@ function generateChart(data) {
         // .attr("dy", "10px")
         .text(function(d) { return d.data.count; });
 }
-
-
-// END D3
-
-
-
-// function showResponse3(response) {
-//       var processed = processData(response);
-//       console.log(processed);
-//       return processed;
-// };
-
-// function showResponse4(response) {
-// 	var crunch = crunchData(processData(response));
-// 	console.log(crunch);
-// 	return crunch;
-// };
-
-// function showResponse5(response) {
-// 	var dataset = smashData(crunchData(processData(response)));
-// 	return dataset;
-// };
 
 function showResponse2(response) {
   var pieGenerated = generateChart(crunchData(processData(response)));
