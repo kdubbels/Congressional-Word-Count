@@ -121,7 +121,7 @@ var myArray = dataset.results;
           radius = Math.min(width, height) / 2;
 
       var color = d3.scale.category10()
-           .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+           .range(["steelblue", "orange", "white"]);
 
       var arc = d3.svg.arc()
           .outerRadius(radius - 10)
@@ -154,7 +154,7 @@ var myArray = dataset.results;
         .text(function(d) { return d.data.party;})
         .append("tspan")
         // .attr("dy", "10px")
-        .text(function(d) { return d.data.count; });
+        .text(function(d) { return " " + d.data.count; });
 }
 
 function showResponse2(response) {
