@@ -57,8 +57,6 @@ function convertParty(data){
 
 };
 
-
-
 function generateChart(data) {
 
   data.forEach(convertParty);
