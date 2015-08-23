@@ -24,24 +24,21 @@ function showResponse1 (response) {
   console.log(response);
 };
 
-// function processData(data) {
-// 	var myData = [];
-// 	for (var key in data) {
-// 	   if (data.hasOwnProperty(key)) {
-// 	   	myData.push(data[key]);
-// 	   }
-// 	}
-//   console.log(myData);
-// 	return myData;
-// };
 
-// function crunchData(data) {
-// 	for (var i = 0; i < data.length; i++) {
-//   	var current = data[i];
-//   	console.log(current);
-//   	return current;
-//   }
-// };
+function newChart(dataset) {
+    var chartDrawn = document.querySelector('#drawnChart');
+
+    if (chartDrawn == null) {
+      generateChart(dataset);
+    } else {
+        if (chartDrawn.firstChild !== null) {
+          chartDrawn.parentNode.removeChild(chartDrawn);
+          generateChart(dataset);
+        } else {
+          generateChart(dataset);
+        }
+    }
+}
 
 
 function generateChart(dataset) {
@@ -132,6 +129,7 @@ var myArray = dataset.results;
           .value(function(d) { return d.count; });
 
       var svg = d3.select("#chart").append("svg")
+          .attr("id", "drawnChart")
           .attr("width", width)
           .attr("height", height)
         .append("g")
@@ -155,10 +153,13 @@ var myArray = dataset.results;
         .append("tspan")
         // .attr("dy", "10px")
         .text(function(d) { return " " + d.data.count; });
-}
+
+
+
+}// end of generateChart()
 
 function showResponse2(response) {
-  var pieGenerated = generateChart(response);
+  var pieGenerated = newChart(response);
 };
 
 });
