@@ -155,6 +155,9 @@ var myArray = dataset.results;
         .text(function(d) { return " " + d.data.count; });
 
 
+      d3.selectAll("td.data").data(data).text(function(d) {return d.count; });
+
+
 
 }// end of generateChart()
 
