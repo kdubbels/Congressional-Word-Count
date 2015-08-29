@@ -121,7 +121,7 @@ console.log(dataset);
           ajaxData.push(democrat, republican, independent);
           console.log(ajaxData);
 
-          pushNewData(ajaxData);
+          pushNewData(democrat, republican, independent);
 };
 
 

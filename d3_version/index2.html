@@ -99,62 +99,110 @@ function showResponse (response) {
 data = [{count: 485, party: "Democrats"}, {count: 440, party: "Republicans"}];
      console.log(data);
 
-function pushNewData(){
+//chart definitions
+width = 960;
+height = 500;
+radius = Math.min(width, height) / 2;
+
+    arc = d3.svg.arc()
+       .innerRadius(radius - 100)
+       .outerRadius(radius - 20);
+
+
+
+function pushNewData(dem, rep, ind){
     console.log("it works!");
+    console.log(data);
+    data = [];
+    console.log(data);
+    data.push(dem, rep, ind);
+    console.log(data);
+    drawChart(data);
 };
 
-(function() {
+console.log(data);
+
+(function(){
+    drawChart(data);
+})();
 
 
+function drawChart(data) {
 
-
-     var width = 960,
-          height = 500,
-          radius = Math.min(width, height) / 2;
 
       var color = d3.scale.category10()
            .range(["steelblue", "orange", "white"]);
 
-      var arc = d3.svg.arc()
-          .outerRadius(radius - 10)
-          .innerRadius(radius - 70);
+           var pie = d3.layout.pie()
+               .value(function(d) { return d.count; })
+               .sort(null);
 
-      var pie = d3.layout.pie()
-          .sort(null)
-          .value(function(d) { return d.count; });
+           // var arc = d3.svg.arc()
+           //     .innerRadius(radius - 100)
+           //     .outerRadius(radius - 20);
 
-      var svg = d3.select("#chart").append("svg")
-          .attr("id", "drawnChart")
-          .attr("width", width)
-          .attr("height", height)
-        .append("g")
-          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+           var svg = d3.select("body").append("svg")
+               .attr("width", width)
+               .attr("height", height)
+             .append("g")
+               .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-      var g = svg.selectAll(".arc")
-          .data(pie(data))
-        .enter().append("g")
-          .attr("class", "arc");
+      // var g = svg.selectAll(".arc")
+      //     .data(pie(data))
+      //   .enter().append("g")
+      //     .attr("class", "arc");
       
-      g.append("path")
-          .attr("d", arc)
-          .style("fill", function(d) {console.log(d); return color(d.data.party); });
+      // g.append("path")
+      //     .attr("d", arc)
+      //     .style("fill", function(d) {console.log(d); return color(d.data.party); });
 
-      g.append("text")
-        .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-        .attr("dy", ".35em")
-        .style("text-anchor", "middle")
-        .append("tspan")
-        .text(function(d) { return d.data.party;})
-        .append("tspan")
-        // .attr("dy", "10px")
-        .text(function(d) { return " " + d.data.count; });
+      // g.append("text")
+      //   .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+      //   .attr("dy", ".35em")
+      //   .style("text-anchor", "middle")
+      //   .append("tspan")
+      //   .text(function(d) { return d.data.party;})
+      //   .append("tspan")
+      //   // .attr("dy", "10px")
+      //   .text(function(d) { return " " + d.data.count; });
 
 
       d3.selectAll("td.data").data(data).text(function(d) {return d.count; });
 
+// Hopefully the tween and update will occur here....
+  var path = svg.datum(data).selectAll("path")
+      .data(pie)
+    .enter().append("path")
+      .attr("fill", function(d, i) { return color(i); })
+      .attr("d", arc)
+      .each(function(d) { this._current = d; }); // store the initial angles
 
-})();
+  d3.selectAll("button")
+      .on("change", change);
 
+  // var timeout = setTimeout(function() {
+  //   d3.select("input[value=\"oranges\"]").property("checked", true).each(change);
+  // }, 2000);
+
+  function change() {
+    var value = this.value;
+    // clearTimeout(timeout);
+    pie.value(function(d) { return d[value]; }); // change the value function
+    path = path.data(pie); // compute the new angles
+    path.transition().duration(750).attrTween("d", arcTween); // redraw the arcs
+  }
+// end
+
+};
+
+
+function arcTween(a) {
+  var i = d3.interpolate(this._current, a);
+  this._current = i(0);
+  return function(t) {
+    return arc(i(t));
+  };
+}
 
     </script>
 </html>
