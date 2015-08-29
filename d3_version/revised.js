@@ -1,27 +1,31 @@
 
 
 
-// $(document).ready(function () {
+$(document).ready(function () {
 
-$('#phrase-lookup').submit(function(e){
-    e.preventDefault();
+          $('#phrase-lookup').submit(function(e){
+              e.preventDefault();
 
-    var query_params = {
-    apikey: 'a059153222414415a40f0b667f0b57ed',
-    phrase: $('#txt-phrase').val(),
-    start_date: $('#txt-startdate').val(),
-    end_date: $('#txt-enddate').val()
-    };
+              var query_params = {
+              apikey: 'a059153222414415a40f0b667f0b57ed',
+              phrase: $('#txt-phrase').val(),
+              start_date: $('#txt-startdate').val(),
+              end_date: $('#txt-enddate').val()
+              };
 
-    var endpoint = "http://capitolwords.org/api/phrases/party.json?callback=?";
+              var endpoint = "http://capitolwords.org/api/phrases/party.json?callback=?";
 
-    var options = {
-      data: query_params,
-      type: 'GET',
-      dataType: 'jsonp'      
-};
+              var options = {
+                data: query_params,
+                type: 'GET',
+                dataType: 'jsonp'      
+          };
 
-var request = $.ajax(endpoint, options).done(showResponse1, showResponse2);
+
+          var request = $.ajax(endpoint, options).done(showResponse1, showResponse2);
+
+});
+
 
 function showResponse1 (response) {
   console.log(response);
@@ -113,11 +117,11 @@ console.log(dataset);
           var independent = {party: "Independents", count: 0};
           independent.count = totalIndependents;
 
-          var data = [];
-          data.push(democrat, republican, independent);
-          console.log(data);
+          ajaxData = [];
+          ajaxData.push(democrat, republican, independent);
+          console.log(ajaxData);
 
-          return data;
+          pushNewData(ajaxData);
 };
 
 
