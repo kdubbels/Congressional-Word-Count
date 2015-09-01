@@ -96,7 +96,7 @@ function showResponse (response) {
 
 
     <script>
-data = [{count: 485, party: "Democrats"}, {count: 440, party: "Republicans"}];
+data = [];
      console.log(data);
 
 //chart definitions
@@ -151,12 +151,12 @@ console.log(data);
 
 
 function drawChart(data) {
-
+  console.log(data);
       var g = svg.selectAll(".arc")
           .data(pie(data))
         .enter().append("g")
           .attr("class", "arc");
-      
+      console.log(pie(data));
       g.append("path")
           .attr("d", arc)
           .style("fill", function(d) {console.log(d); return color(d.data.party); });
@@ -185,9 +185,56 @@ function redrawChart() {
 console.log("boo");
 path0 = svg[0][0].children[0].__data__.value;
 path1 = svg[0][0].children[1].__data__.value;
-path0 = data[0].count;
-console.log(path0);
+path2 = svg[0][0].children[2].__data__.value;
+
 svg[0][0].children[0].__data__.value = data[0].count;
+svg[0][0].children[1].__data__.value = data[1].count;
+svg[0][0].children[2].__data__.value = data[2].count;
+
+var count0 = svg[0][0].children[0].__data__.value
+var count1 = svg[0][0].children[1].__data__.value
+var count2 = svg[0][0].children[2].__data__.value
+console.log(count0);
+console.log(count1);
+console.log(count2);
+
+
+var democrats = {};
+democrats.party = "Democrats";
+democrats.count = count0;
+
+var republicans = {};
+republicans.party = "Republicans";
+republicans.count = count1;
+
+var independents = {};
+independents.party = "Independents";
+independents.count = count2;
+
+newDataset = [];
+newDataset.push(democrats, republicans, independents);
+
+// var redrawDataset = [];
+// redrawDataset.push(slice1, slice2, slice3);
+
+console.log(newDataset);
+pieRedraw = pie(newDataset);
+console.log(pieRedraw);
+
+// pieRedraw[0].startAngle;
+// pieRedraw[0].endAngle;
+
+svg[0][0].children[0].__data__.startAngle = pieRedraw[0].startAngle;
+svg[0][0].children[0].__data__.endAngle = pieRedraw[0].endAngle;
+svg[0][0].children[0].__data__.value = pieRedraw[0].value;
+
+svg[0][0].children[1].__data__.startAngle = pieRedraw[1].startAngle;
+svg[0][0].children[1].__data__.endAngle = pieRedraw[1].endAngle;
+svg[0][0].children[1].__data__.value = pieRedraw[1].value;
+
+svg[0][0].children[2].__data__.startAngle = pieRedraw[2].startAngle;
+svg[0][0].children[2].__data__.endAngle = pieRedraw[2].endAngle;
+svg[0][0].children[2].__data__.value = pieRedraw[2].value;
 };
 
     </script>
