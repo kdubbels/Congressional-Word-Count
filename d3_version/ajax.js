@@ -15,7 +15,7 @@ var endpoint = "http://capitolwords.org/api/phrases/party.json?callback=?";
 var options = {
   data: query_params,
   type: 'GET',
-  dataType: 'jsonp'      
+  dataType: 'jsonp'
 };
 
 var request = $.ajax(endpoint, options).done(showResponse1, showResponse2);
