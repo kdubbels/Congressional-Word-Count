@@ -48,6 +48,7 @@ var svg = d3.select("body").append("svg")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 d3.tsv("data.tsv", type, function(error, data) {
+  console.log(data);
   var path = svg.datum(data).selectAll("path")
       .data(pie)
     .enter().append("path")
@@ -64,11 +65,13 @@ d3.tsv("data.tsv", type, function(error, data) {
   function change() {
     // console.log(pie);
     var value = this.value;
-    console.trace(value);
-    clearTimeout(timeout);
-    pie.value(function(d) {console.log(d); return d[value]; }); // change the value function
+    console.log(this);
+    console.log(value);
+    // clearTimeout(timeout);
+    pie.value(function(d) {console.log(d[value]); return d[value]; }); // change the value function
     path = path.data(pie); // compute the new angles
-    console.trace(path);
+    console.log(path);
+    console.log(value);
     path.attr("d", arc); // redraw the arcs
   }
 });
